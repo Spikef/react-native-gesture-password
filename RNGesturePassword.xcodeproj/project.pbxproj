@@ -1,0 +1,288 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		404DFD911B92D03A005E1092 /* RNGesturePassword.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 404DFD901B92D03A005E1092 /* RNGesturePassword.h */; };
+		404DFD931B92D03A005E1092 /* RNGesturePassword.m in Sources */ = {isa = PBXBuildFile; fileRef = 404DFD921B92D03A005E1092 /* RNGesturePassword.m */; };
+		404DFDB81B92D302005E1092 /* GesturePasswordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 404DFDB71B92D302005E1092 /* GesturePasswordView.m */; };
+		404DFDCB1B930251005E1092 /* BoardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 404DFDCA1B930251005E1092 /* BoardView.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		404DFD8B1B92D03A005E1092 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+				404DFD911B92D03A005E1092 /* RNGesturePassword.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		404DFD8D1B92D03A005E1092 /* libRNGesturePassword.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNGesturePassword.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		404DFD901B92D03A005E1092 /* RNGesturePassword.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNGesturePassword.h; sourceTree = "<group>"; };
+		404DFD921B92D03A005E1092 /* RNGesturePassword.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNGesturePassword.m; sourceTree = "<group>"; };
+		404DFDB61B92D302005E1092 /* GesturePasswordView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GesturePasswordView.h; sourceTree = "<group>"; };
+		404DFDB71B92D302005E1092 /* GesturePasswordView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GesturePasswordView.m; sourceTree = "<group>"; };
+		404DFDC91B930237005E1092 /* BoardView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BoardView.h; sourceTree = "<group>"; };
+		404DFDCA1B930251005E1092 /* BoardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoardView.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		404DFD8A1B92D03A005E1092 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		404DFD841B92D03A005E1092 = {
+			isa = PBXGroup;
+			children = (
+				404DFD8F1B92D03A005E1092 /* RNGesturePassword */,
+				404DFD8E1B92D03A005E1092 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		404DFD8E1B92D03A005E1092 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				404DFD8D1B92D03A005E1092 /* libRNGesturePassword.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		404DFD8F1B92D03A005E1092 /* RNGesturePassword */ = {
+			isa = PBXGroup;
+			children = (
+				404DFDB61B92D302005E1092 /* GesturePasswordView.h */,
+				404DFDB71B92D302005E1092 /* GesturePasswordView.m */,
+				404DFD901B92D03A005E1092 /* RNGesturePassword.h */,
+				404DFD921B92D03A005E1092 /* RNGesturePassword.m */,
+				404DFDC91B930237005E1092 /* BoardView.h */,
+				404DFDCA1B930251005E1092 /* BoardView.m */,
+			);
+			path = RNGesturePassword;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		404DFD8C1B92D03A005E1092 /* RNGesturePassword */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 404DFD961B92D03A005E1092 /* Build configuration list for PBXNativeTarget "RNGesturePassword" */;
+			buildPhases = (
+				404DFD891B92D03A005E1092 /* Sources */,
+				404DFD8A1B92D03A005E1092 /* Frameworks */,
+				404DFD8B1B92D03A005E1092 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RNGesturePassword;
+			productName = RNGesturePassword;
+			productReference = 404DFD8D1B92D03A005E1092 /* libRNGesturePassword.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		404DFD851B92D03A005E1092 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0700;
+				ORGANIZATIONNAME = Spikef;
+				TargetAttributes = {
+					404DFD8C1B92D03A005E1092 = {
+						CreatedOnToolsVersion = 7.0;
+					};
+				};
+			};
+			buildConfigurationList = 404DFD881B92D03A005E1092 /* Build configuration list for PBXProject "RNGesturePassword" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 404DFD841B92D03A005E1092;
+			productRefGroup = 404DFD8E1B92D03A005E1092 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				404DFD8C1B92D03A005E1092 /* RNGesturePassword */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		404DFD891B92D03A005E1092 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				404DFDCB1B930251005E1092 /* BoardView.m in Sources */,
+				404DFD931B92D03A005E1092 /* RNGesturePassword.m in Sources */,
+				404DFDB81B92D302005E1092 /* GesturePasswordView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		404DFD941B92D03A005E1092 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../../React/**",
+					"$(SRCROOT)/../react-native/React/**",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		404DFD951B92D03A005E1092 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../../React/**",
+					"$(SRCROOT)/../react-native/React/**",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		404DFD971B92D03A005E1092 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../../React/**",
+					"$(SRCROOT)/../react-native/React/**",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		404DFD981B92D03A005E1092 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../../React/**",
+					"$(SRCROOT)/../react-native/React/**",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		404DFD881B92D03A005E1092 /* Build configuration list for PBXProject "RNGesturePassword" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				404DFD941B92D03A005E1092 /* Debug */,
+				404DFD951B92D03A005E1092 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		404DFD961B92D03A005E1092 /* Build configuration list for PBXNativeTarget "RNGesturePassword" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				404DFD971B92D03A005E1092 /* Debug */,
+				404DFD981B92D03A005E1092 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 404DFD851B92D03A005E1092 /* Project object */;
+}
