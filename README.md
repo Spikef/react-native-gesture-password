@@ -4,7 +4,7 @@ A gesture password component for React Native
 
 一个React Native的手势密码组件
 
-![image](https://github.com/Spikef/react-native-gesture-password/raw/master/screenshots.gif)
+![image](https://github.com/Spikef/react-native-gesture-password/raw/master/screenshot.gif)
 
 ## Usage
 
@@ -109,4 +109,5 @@ AppRegistry.registerComponent('AppDemo', () => AppDemo);
 # Credits
 
 This project is inspired by [GesturePasswordView](https://github.com/cluries/GesturePasswordView).
+
 If you have suggestions or bug reports, feel free to send pull request or [create new issue](https://github.com/spikef/react-native-gesture-password/issues/new).
