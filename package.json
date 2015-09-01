@@ -1,21 +1,20 @@
 {
-  "name": "react-native-phone-picker",
-  "version": "0.0.3",
-  "description": "React Native component for select phone number from address book",
+  "name": "react-native-gesture-password",
+  "version": "0.0.1",
+  "description": "A gesture password component for React Native",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Spikef/react-native-phone-picker.git"
+    "url": "git+https://github.com/Spikef/react-native-gesture-password.git"
   },
   "keywords": [
     "react-component",
     "react-native",
     "ios",
-    "address",
-    "phone"
+    "gesture password"
   ],
   "author": {
     "name": "Spikef",
@@ -23,7 +22,7 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/silentcloud/react-native-phone-picker/issues"
+    "url": "https://github.com/silentcloud/react-native-gesture-password/issues"
   },
   "peerDependencies": {
     "react-native": ">=0.7"

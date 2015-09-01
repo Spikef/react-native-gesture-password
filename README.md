@@ -4,6 +4,8 @@ A gesture password component for React Native
 
 一个React Native的手势密码组件
 
+![image](https://github.com/Spikef/react-native-gesture-password/raw/master/screenshots.gif)
+
 ## Usage
 
 ```javascript
@@ -36,13 +38,13 @@ var PhonePickerDemo = React.createClass({
                 gestureError: false,
                 inputTipText: 'Password is right, success.'
             })
+            
+            // your codes to close this view
         } else {
             this.refs.pg.setNativeProps({
                 gestureError: true,
                 inputTipText: 'Password is wrong, try again.'
             });
-
-            // your codes to close this view
         }
     },
     onStart: function() {
@@ -104,3 +106,7 @@ var PhonePickerDemo = React.createClass({
 AppRegistry.registerComponent('AppDemo', () => AppDemo);
 
 ```
+# Credits
+
+This project is inspired by [GesturePasswordView](https://github.com/cluries/GesturePasswordView).
+If you have suggestions or bug reports, feel free to send pull request or [create new issue](https://github.com/spikef/react-native-gesture-password/issues/new).
