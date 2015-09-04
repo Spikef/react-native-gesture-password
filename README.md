@@ -30,7 +30,7 @@ var {
 var PasswordGesture = require('react-native-gesture-password');
 
 var Password1 = '';
-var PhonePickerDemo = React.createClass({
+var AppDemo = React.createClass({
     // Example for check password
     onEnd: function(password) {
         if (password == '012') {
