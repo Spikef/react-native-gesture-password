@@ -22,7 +22,7 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/silentcloud/react-native-gesture-password/issues"
+    "url": "https://github.com/spikef/react-native-gesture-password/issues"
   },
   "peerDependencies": {
     "react-native": ">=0.7"
