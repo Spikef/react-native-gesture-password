@@ -2,7 +2,6 @@
 
 var React = require('react-native');
 var { requireNativeComponent } = React;
-var merge = require('merge');
 
 class GesturePassword extends React.Component {
     constructor() {
@@ -28,11 +27,10 @@ class GesturePassword extends React.Component {
         this.props.onEnd && this.props.onEnd(e.password);
     }
     render() {
-        var nativeProps = merge(this.props, {
-            onStart: this._onStart,
-            onCancel: this._onCancel,
-            onEnd: this._onEnd
-        });
+        var nativeProps = Object.assign({}, this.props);
+        nativeProps.onStart = this._onStart;
+        nativeProps.onCancel = this._onCancel;
+        nativeProps.onEnd = this._onEnd;
 
         return <RNGesturePassword ref='password' {...nativeProps} />;
     }
