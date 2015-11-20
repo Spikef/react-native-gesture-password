@@ -62,9 +62,60 @@ UIColorRGB(float r, float g, float b)
         messageLabel_.text          = inputDefault;
         
         [self addSubview:messageLabel_];
+        
+        [[NSNotificationCenter defaultCenter]
+         addObserver:self
+         selector:@selector(deviceOrientationDidChangeNotification:)
+         name:UIDeviceOrientationDidChangeNotification
+         object:nil];
+        
+        [self applyScreenAdaptation];
+
     }
     
     return self;
+}
+
+- (void)deviceOrientationDidChangeNotification:(NSNotification*)note
+{
+    [self applyScreenAdaptation];
+}
+
+-(void)applyScreenAdaptation
+{
+    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+
+    int Width = [UIScreen mainScreen].bounds.size.width;
+    int Height = [UIScreen mainScreen].bounds.size.height;
+    float top;
+
+    if(orientation == UIInterfaceOrientationLandscapeRight || orientation == UIInterfaceOrientationLandscapeLeft){
+        top = Height*0.1;
+        
+        messageLabel_.frame = CGRectMake(0, 0, Width, top);
+        
+        [_gesturePasswordView removeFromSuperview];
+        _gesturePasswordView = [[GesturePasswordView alloc] initWithFrame:CGRectMake(Width/2-Height*0.4, top, Height*0.8, Height*0.8)];
+        _gesturePasswordView.backgroundColor = self.backgroundColor;
+        _gesturePasswordView.delegate        = self;
+        [self addSubview:_gesturePasswordView];
+        
+        backView_.frame = CGRectMake(0, 0, Width, Height);
+        
+    }else if(orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown){
+        top = (Height - Width)/2.0 * 1.5;
+        
+        messageLabel_.frame = CGRectMake(0, top/2.2, Width, top/3.0);
+        
+        [_gesturePasswordView removeFromSuperview];
+        _gesturePasswordView = [[GesturePasswordView alloc] initWithFrame:CGRectMake(0, top, Width, Width)];
+        _gesturePasswordView.backgroundColor = self.backgroundColor;
+        _gesturePasswordView.delegate        = self;
+        [self addSubview:_gesturePasswordView];
+        
+        backView_.frame = CGRectMake(0, 0, Width, Height);
+    }
+
 }
 
 -(id)hitTest:(CGPoint)point withEvent:(UIEvent *)event
@@ -135,7 +186,7 @@ UIColorRGB(float r, float g, float b)
         if (weakpv.sequence == sequence) {
             [weakpv reset];
             messageLabel_.textColor = [weakpv selectedColor];
-            messageLabel_.text      = inputDefault;
+           // messageLabel_.text      = inputDefault;
         }
     });
 }
