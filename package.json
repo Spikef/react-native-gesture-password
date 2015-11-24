@@ -1,6 +1,6 @@
 {
   "name": "react-native-gesture-password",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A gesture password component for React Native",
   "main": "index.js",
   "scripts": {
