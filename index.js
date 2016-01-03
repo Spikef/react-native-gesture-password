@@ -68,6 +68,7 @@ var GesturePassword = React.createClass({
     timer: null,
     lastIndex: -1,
     sequence: '',   // 手势结果
+    isMoving: false,
     propTypes: {
         message: PropTypes.string,
         rightColor: PropTypes.string,
@@ -204,6 +205,7 @@ var GesturePassword = React.createClass({
 
         var lastChar = this.getTouchChar({x, y});
         if ( lastChar ) {
+            this.isMoving = true;
             this.lastIndex = Number(lastChar);
             this.sequence = lastChar;
             this.resetActive();
@@ -231,10 +233,12 @@ var GesturePassword = React.createClass({
         var x = e.nativeEvent.pageX;
         var y = e.nativeEvent.pageY - Top;
 
-        this.state.lines[this.state.lines.length - 1].end = {x, y};
-        this.forceUpdate();
+        if ( this.isMoving ) {
+            this.state.lines[this.state.lines.length - 1].end = {x, y};
+            this.forceUpdate();
+        }
 
-        if ( this.lastIndex>-1 && !helper.isPointInCircle({x, y}, this.state.circles[this.lastIndex], Radius) ) {
+        if ( this.isMoving && !helper.isPointInCircle({x, y}, this.state.circles[this.lastIndex], Radius) ) {
             var lastChar = this.getTouchChar({x, y});
             if ( lastChar && this.sequence.indexOf(lastChar) === -1 ) {
                 this.lastIndex = Number(lastChar);
@@ -261,10 +265,11 @@ var GesturePassword = React.createClass({
         }
     },
     onEnd: function(e, g) {
-        if ( this.lastIndex>-1 ) {
+        if ( this.isMoving ) {
             var password = helper.getRealPassword(this.sequence);
             this.sequence = '';
             this.lastIndex = -1;
+            this.isMoving = false;
 
             var lastLine = this.state.lines[this.state.lines.length - 1];
             if ( !helper.isEquals(lastLine.start, lastLine.end) ) {
