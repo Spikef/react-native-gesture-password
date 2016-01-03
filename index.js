@@ -32,6 +32,38 @@ var Circle = React.createClass({
     }
 });
 
+var Line = React.createClass({
+    propTypes: {
+        color: PropTypes.string,
+        start: PropTypes.shape({
+            x: PropTypes.number,
+            y: PropTypes.number
+        }),
+        end: PropTypes.shape({
+            x: PropTypes.number,
+            y: PropTypes.number
+        })
+    },
+    render: function() {
+        var { start, end, color } = this.props;
+
+        if ( helper.isEquals(start, end) ) return null;
+
+        var transform = helper.getTransform(start, end);
+        var length = transform.d;
+        var angle = transform.a + 'rad';
+        var moveX = transform.x;
+        var moveY = transform.y;
+
+        return (
+            <View style={[
+                circles.line, {backgroundColor: color, left: start.x, top: start.y, width: length},
+                {transform: [{translateX: moveX}, {translateY: moveY}, {rotateZ: angle}]}
+            ]} />
+        )
+    }
+});
+
 var GesturePassword = React.createClass({
     timer: null,
     lastIndex: -1,
@@ -69,7 +101,7 @@ var GesturePassword = React.createClass({
 
         return {
             circles: circles,
-            Lines: []
+            lines: []
         }
     },
     componentWillMount: function() {
@@ -105,9 +137,10 @@ var GesturePassword = React.createClass({
                     </Text>
                 </View>
                 <View style={styles.board} {...this._panResponder.panHandlers}>
-                        {this.renderCircles()}
+                    {this.renderCircles()}
+                    {this.renderLines()}
                 </View>
-                {this.state.Lines}
+
                 {this.props.children}
             </View>
         )
@@ -121,7 +154,21 @@ var GesturePassword = React.createClass({
             color = status === 'wrong' ? wrongColor : rightColor;
 
             array.push(
-                <Circle key={i} fill={fill} color={color} x={c.x} y={c.y} />
+                <Circle key={'c_' + i} fill={fill} color={color} x={c.x} y={c.y} />
+            )
+        });
+
+        return array;
+    },
+    renderLines: function() {
+        var array = [], color;
+        var{ status, wrongColor, rightColor } = this.props;
+
+        this.state.lines.forEach(function(l, i) {
+            color = status === 'wrong' ? wrongColor : rightColor;
+
+            array.push(
+                <Line key={'l_' + i} color={color} start={l.start} end={l.end} />
             )
         });
 
@@ -132,6 +179,7 @@ var GesturePassword = React.createClass({
         this.forceUpdate();
     },
     resetActive: function() {
+        this.state.lines = [];
         for (let i=0; i < 9; i++) {
             this.state.circles[i].isActive = false;
         }
@@ -161,6 +209,17 @@ var GesturePassword = React.createClass({
             this.resetActive();
             this.setActive(this.lastIndex);
 
+            this.state.lines.push({
+                start: {
+                    x: this.state.circles[this.lastIndex].x,
+                    y: this.state.circles[this.lastIndex].y
+                },
+                end: {
+                    x: this.state.circles[this.lastIndex].x,
+                    y: this.state.circles[this.lastIndex].y
+                }
+            });
+
             this.props.onStart && this.props.onStart();
 
             if ( this.props.interval>0 ) {
@@ -172,11 +231,31 @@ var GesturePassword = React.createClass({
         var x = e.nativeEvent.pageX;
         var y = e.nativeEvent.pageY - Top;
 
+        this.state.lines[this.state.lines.length - 1].end = {x, y};
+        this.forceUpdate();
+
         if ( this.lastIndex>-1 && !helper.isPointInCircle({x, y}, this.state.circles[this.lastIndex], Radius) ) {
             var lastChar = this.getTouchChar({x, y});
             if ( lastChar && this.sequence.indexOf(lastChar) === -1 ) {
                 this.lastIndex = Number(lastChar);
                 this.sequence += lastChar;
+
+                this.state.lines[this.state.lines.length - 1].end = {
+                    x: this.state.circles[this.lastIndex].x,
+                    y: this.state.circles[this.lastIndex].y
+                };
+
+                this.state.lines.push({
+                    start: {
+                        x: this.state.circles[this.lastIndex].x,
+                        y: this.state.circles[this.lastIndex].y
+                    },
+                    end: {
+                        x: this.state.circles[this.lastIndex].x,
+                        y: this.state.circles[this.lastIndex].y
+                    }
+                });
+
                 this.setActive(this.lastIndex);
             }
         }
@@ -186,6 +265,12 @@ var GesturePassword = React.createClass({
             var password = helper.getRealPassword(this.sequence);
             this.sequence = '';
             this.lastIndex = -1;
+
+            var lastLine = this.state.lines[this.state.lines.length - 1];
+            if ( !helper.isEquals(lastLine.start, lastLine.end) ) {
+                this.state.lines.pop();
+                this.forceUpdate();
+            }
 
             this.props.onEnd && this.props.onEnd(password);
 
@@ -198,9 +283,7 @@ var GesturePassword = React.createClass({
 
 var helper = {
     isPointInCircle: function(point, center, radius) {
-        var a = Math.pow((center.x - point.x), 2);
-        var b = Math.pow((center.y - point.y), 2);
-        var d = Math.sqrt(a + b);
+        var d = this.getDistance(point, center);
 
         return d <= radius;
     },
@@ -208,6 +291,36 @@ var helper = {
         return str.replace(/\d/g, function($0) {
             return Number($0) + 1;
         });
+    },
+    getDistance: function(pt1, pt2) {
+        var a = Math.pow((pt1.x - pt2.x), 2);
+        var b = Math.pow((pt1.y - pt2.y), 2);
+        var d = Math.sqrt(a + b);
+
+        return d;
+    },
+    getTransform: function(pt1, pt2) {
+        var d = this.getDistance(pt1, pt2);
+
+        var c = (pt2.x - pt1.x) / d;
+        var a = Math.acos(c);           // 旋转角度
+        if ( pt1.y > pt2.y ) a = 2 * Math.PI - a;
+
+        var c1 = {
+            x: pt1.x + d / 2,
+            y: pt1.y
+        };
+        var c2 = {
+            x: (pt2.x + pt1.x) / 2,
+            y: (pt2.y + pt1.y) /2
+        };
+        var x = c2.x - c1.x;
+        var y = c2.y - c1.y;
+
+        return {d, a, x, y};
+    },
+    isEquals: function(pt1, pt2) {
+        return (pt1.x === pt2.x && pt1.y === pt2.y);
     }
 };
 
@@ -251,6 +364,10 @@ var circles = StyleSheet.create({
         width: Diameter / 3,
         height: Diameter / 3,
         borderRadius: Radius / 3
+    },
+    line: {
+        position: 'absolute',
+        height: 1
     }
 });
 
