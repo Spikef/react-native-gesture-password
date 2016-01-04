@@ -26,6 +26,9 @@ Can be 'normal', 'right' or 'wrong'.
 
 The gesture password don't validate your password. You should do that yourself, and tell the result by status.
 
+### style (string)
+Styles for the gesture password view.
+
 ### rightColor (string)
 
 Use this color to render when status !== 'wrong'.
