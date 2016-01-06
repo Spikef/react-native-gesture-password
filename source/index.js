@@ -30,7 +30,8 @@ var GesturePassword = React.createClass({
         status: PropTypes.oneOf(['right', 'wrong', 'normal']),
         onStart: PropTypes.func,
         onEnd: PropTypes.func,
-        interval: PropTypes.number
+        interval: PropTypes.number,
+        allowCross: PropTypes.bool
     },
     getDefaultProps: function() {
         return {
@@ -38,7 +39,8 @@ var GesturePassword = React.createClass({
             rightColor: '#5FA8FC',
             wrongColor: '#D93609',
             status: 'normal',
-            interval: 0
+            interval: 0,
+            allowCross: false
         }
     },
     getInitialState: function() {
@@ -157,6 +159,22 @@ var GesturePassword = React.createClass({
 
         return false;
     },
+    getCrossChar: function(char) {
+        var middles = '13457', last = String(this.lastIndex);
+
+        if ( middles.indexOf(char) > -1 || middles.indexOf(last) > -1 ) return false;
+
+        var point = helper.getMiddlePoint(this.state.circles[last], this.state.circles[char]);
+
+        for (let i=0; i < middles.length; i++) {
+            let index = middles[i];
+            if ( helper.isEquals(point, this.state.circles[index]) ) {
+                return String(index);
+            }
+        }
+
+        return false;
+    },
     onStart: function(e, g) {
         var x = e.nativeEvent.pageX;
         var y = e.nativeEvent.pageY - Top;
@@ -189,11 +207,23 @@ var GesturePassword = React.createClass({
 
         if ( this.isMoving ) {
             this.refs.line.setNativeProps({end: {x, y}});
-        }
 
-        if ( this.isMoving && !helper.isPointInCircle({x, y}, this.state.circles[this.lastIndex], Radius) ) {
-            var lastChar = this.getTouchChar({x, y});
+            var lastChar = null;
+
+            if ( !helper.isPointInCircle({x, y}, this.state.circles[this.lastIndex], Radius) ) {
+                lastChar = this.getTouchChar({x, y});
+            }
+
             if ( lastChar && this.sequence.indexOf(lastChar) === -1 ) {
+                if ( !this.props.allowCross ) {
+                    var crossChar = this.getCrossChar(lastChar);
+
+                    if ( crossChar && this.sequence.indexOf(crossChar) === -1 ) {
+                        this.sequence += crossChar;
+                        this.setActive(Number(crossChar));
+                    }
+                }
+
                 var lastIndex = this.lastIndex;
                 var thisIndex = Number(lastChar);
 
@@ -221,6 +251,8 @@ var GesturePassword = React.createClass({
                 this.refs.line.setNativeProps({start: point});
             }
         }
+
+        if ( this.sequence.length === 9 ) this.onEnd();
     },
     onEnd: function(e, g) {
         if ( this.isMoving ) {

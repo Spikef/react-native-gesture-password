@@ -1,6 +1,6 @@
 # react-native-gesture-password
 
-A gesture password component for React Native. It supports both iOS and Android since it's' written in pure JavaScript.
+A gesture password component for React Native. It supports both iOS and Android since it's written in pure JavaScript.
 
 一个React Native的手势密码组件，纯JavaScript实现，因此同时支持iOS和安卓平台。
 
@@ -40,6 +40,10 @@ Use this color to render when status === 'wrong'.
 ### interval (number)
 
 The active circles will be reset automatically after you give an interval.
+
+### allowCross (boolean)
+
+Allow cross the circles(eg: 1 -> 7 -> 4), default is false.
 
 ### onStart (function)
 
@@ -153,6 +157,8 @@ AppRegistry.registerComponent('AppDemo', () => AppDemo);
 
 ```
 ## Change Logs
+
+v1.0.3 Add the allowCross property.
 
 v1.0.2 Improve the performance for real device.
 
