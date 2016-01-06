@@ -152,6 +152,12 @@ var AppDemo = React.createClass({
 AppRegistry.registerComponent('AppDemo', () => AppDemo);
 
 ```
+## Change Logs
+
+v1.0.2 Improve the performance for real device.
+
+v1.0.0 Rewrite in pure javascript, for Android support.
+
 ## Notes
 
 This old version(<0.1.0) is at the branch native. I won't update that unless fix bugs.
