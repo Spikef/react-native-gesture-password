@@ -17,6 +17,7 @@ var Width = Dimensions.get('window').width;
 var Height = Dimensions.get('window').height;
 var Top = (Height - Width)/2.0 * 1.5;
 var Radius = Width / 10;
+var NUM_CIRCLES = 9
 
 var GesturePassword = React.createClass({
     timer: null,
@@ -46,7 +47,7 @@ var GesturePassword = React.createClass({
     getInitialState: function() {
         var circles = [];
         var Margin = Radius;
-        for (let i=0; i < 9; i++) {
+        for (let i=0; i < NUM_CIRCLES; i++) {
             let p = i % 3;
             let q = parseInt(i / 3);
             circles.push({
@@ -140,7 +141,7 @@ var GesturePassword = React.createClass({
     },
     resetActive: function() {
         this.state.lines = [];
-        for (let i=0; i < 9; i++) {
+        for (let i=0; i < NUM_CIRCLES; i++) {
             this.state.circles[i].isActive = false;
         }
 
@@ -151,7 +152,7 @@ var GesturePassword = React.createClass({
         var x = touch.x;
         var y = touch.y;
 
-        for (let i=0; i < 9; i++) {
+        for (let i=0; i < NUM_CIRCLES; i++) {
             if ( helper.isPointInCircle({x, y}, this.state.circles[i], Radius) ) {
                 return String(i);
             }
@@ -214,7 +215,7 @@ var GesturePassword = React.createClass({
                 lastChar = this.getTouchChar({x, y});
             }
 
-            if ( lastChar && this.sequence.indexOf(lastChar) === -1 ) {
+            if ( lastChar ) {
                 if ( !this.props.allowCross ) {
                     var crossChar = this.getCrossChar(lastChar);
 
@@ -252,7 +253,7 @@ var GesturePassword = React.createClass({
             }
         }
 
-        if ( this.sequence.length === 9 ) this.onEnd();
+        // if ( this.sequence.length === NUM_CIRCLES ) this.onEnd();
     },
     onEnd: function(e, g) {
         if ( this.isMoving ) {
