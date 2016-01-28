@@ -30,6 +30,7 @@ var GesturePassword = React.createClass({
         status: PropTypes.oneOf(['right', 'wrong', 'normal']),
         onStart: PropTypes.func,
         onEnd: PropTypes.func,
+        hollow: PropTypes.bool,
         interval: PropTypes.number,
         allowCross: PropTypes.bool
     },
@@ -40,7 +41,8 @@ var GesturePassword = React.createClass({
             wrongColor: '#D93609',
             status: 'normal',
             interval: 0,
-            allowCross: false
+            allowCross: false,
+            hollow: true
         }
     },
     getInitialState: function() {
@@ -105,14 +107,14 @@ var GesturePassword = React.createClass({
     },
     renderCircles: function() {
         var array = [], fill, color;
-        var{ status, wrongColor, rightColor } = this.props;
+        var { hollow, status, wrongColor, rightColor } = this.props;
 
         this.state.circles.forEach(function(c, i) {
-            fill = c.isActive;
+            fill = !hollow || c.isActive;
             color = status === 'wrong' ? wrongColor : rightColor;
 
             array.push(
-                <Circle key={'c_' + i} fill={fill} color={color} x={c.x} y={c.y} r={Radius} />
+                <Circle key={'c_' + i} fill={fill} border={hollow} color={color} x={c.x} y={c.y} r={Radius} />
             )
         });
 
