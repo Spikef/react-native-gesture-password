@@ -30,6 +30,7 @@ var GesturePassword = React.createClass({
         status: PropTypes.oneOf(['right', 'wrong', 'normal']),
         onStart: PropTypes.func,
         onEnd: PropTypes.func,
+        onReset: PropTypes.func,
         interval: PropTypes.number,
         allowCross: PropTypes.bool
     },
@@ -89,7 +90,7 @@ var GesturePassword = React.createClass({
         return (
             <View style={[styles.frame, this.props.style, {flex: 1}]}>
                 <View style={styles.message}>
-                    <Text style={[styles.msgText, {color: color}]}>
+                    <Text style={[styles.msgText, this.props.textStyle, {color: color}]}>
                         {this.state.message || this.props.message}
                     </Text>
                 </View>
@@ -146,6 +147,7 @@ var GesturePassword = React.createClass({
 
         var circles = this.state.circles;
         this.setState({circles});
+        this.props.onReset && this.props.onReset();
     },
     getTouchChar: function(touch) {
         var x = touch.x;

@@ -18,7 +18,7 @@ All properties bellow are optional.
 
 ### message (string)
 
-The message text you want to show.
+The message text you want to show. NOTE: If you leave this blank, no message appears for any state changes.
 
 ### status (string)
 
@@ -27,7 +27,11 @@ Can be 'normal', 'right' or 'wrong'.
 The gesture password don't validate your password. You should do that yourself, and tell the result by status.
 
 ### style (string)
+
 Styles for the gesture password view.
+
+### textStyle (string)
+Style for the text element in the view.
 
 ### rightColor (string)
 
@@ -52,6 +56,10 @@ Event raised when user touch a number circle.
 ### onEnd (function)
 
 Event raised when user finish input a password.
+
+### onReset (function)
+
+Event raised after the reset interval has cleared circles. Can be used to reset message.
 
 ### children
 
@@ -92,7 +100,12 @@ var AppDemo = React.createClass({
             message: 'Please input your password.'
         });
     },
-
+    onReset: function() {
+        this.setState({
+            status: 'normal',
+            message: 'Please input your password (again).'
+        });
+    },
     // Example for set password
     /*
     onEnd: function(password) {
