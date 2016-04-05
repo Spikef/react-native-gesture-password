@@ -29,6 +29,12 @@ var AppDemo = React.createClass({
             message: 'Please input your password.'
         });
     },
+    onReset: function() {
+        this.setState({
+            status: 'normal',
+            message: 'Please input your password (again).'
+        });
+    },
 
     // Example for set password
     /*
