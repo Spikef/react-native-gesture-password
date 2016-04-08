@@ -171,6 +171,10 @@ AppRegistry.registerComponent('AppDemo', () => AppDemo);
 ```
 ## Change Logs
 
+v1.0.5 TextStyle and onReset event. (@caledhwa)
+
+v1.0.4 Manage the adaptation to landscape orientation. (@jujumoz)
+
 v1.0.3 Add the allowCross property.
 
 v1.0.2 Improve the performance for real device.
