@@ -1,14 +1,7 @@
 var helper = require('./helper');
 
-var React = require('react-native');
-var {
-    StyleSheet,
-    PropTypes,
-    Dimensions,
-    PanResponder,
-    View,
-    Text
-    } = React;
+import React, { PropTypes } from 'react'
+import { StyleSheet,Dimensions,PanResponder, View,Text } from 'react-native'
 
 var Line = require('./line');
 var Circle = require('./circle');

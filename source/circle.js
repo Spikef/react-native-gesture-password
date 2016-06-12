@@ -1,11 +1,7 @@
 var helper = require('./helper');
 
-var React = require('react-native');
-var {
-    StyleSheet,
-    PropTypes,
-    View,
-    } = React;
+import React, { PropTypes } from 'react'
+import { StyleSheet, View } from 'react-native'
 
 var Circle = React.createClass({
     propTypes: {
