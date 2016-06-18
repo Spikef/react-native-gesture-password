@@ -1,7 +1,10 @@
-var React = require('react-native');
+var React = require('react');
 var {
     AppRegistry,
-    } = React;
+    StyleSheet,
+    Text,
+    View
+} = require('react-native');
 
 var PasswordGesture = require('react-native-gesture-password');
 
@@ -35,7 +38,6 @@ var AppDemo = React.createClass({
             message: 'Please input your password (again).'
         });
     },
-
     // Example for set password
     /*
     onEnd: function(password) {
@@ -76,7 +78,6 @@ var AppDemo = React.createClass({
         }
     },
     */
-
     getInitialState: function() {
         return {
             message: 'Please input your password.',
@@ -91,7 +92,7 @@ var AppDemo = React.createClass({
                 message={this.state.message}
                 onStart={() => this.onStart()}
                 onEnd={(password) => this.onEnd(password)}
-                />
+            />
         );
     }
 });

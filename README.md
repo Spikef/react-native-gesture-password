@@ -65,14 +65,18 @@ Event raised after the reset interval has cleared circles. Can be used to reset 
 
 Other components that you want to display.
 
+### outerCircle and innerCircle (boolean)
+
+Control whether to draw outer and inner circle, true default.
+
 ## Examples
 
 ```javascript
 
-var React = require('react-native');
+var React = require('react');
 var {
     AppRegistry,
-    } = React;
+    } = require('react-native');
 
 var PasswordGesture = require('react-native-gesture-password');
 
@@ -171,15 +175,31 @@ AppRegistry.registerComponent('AppDemo', () => AppDemo);
 ```
 ## Change Logs
 
-v1.0.5 TextStyle and onReset event. (@caledhwa)
+#### v0.2.0
 
-v1.0.4 Manage the adaptation to landscape orientation. (@jujumoz)
+Rewrite with ES6 for React-Native@v0.25+ support
 
-v1.0.3 Add the allowCross property.
+Add outerCircle and innerCircle properties
 
-v1.0.2 Improve the performance for real device.
+#### v0.1.5
 
-v1.0.0 Rewrite in pure javascript, for Android support.
+TextStyle and onReset event. (@caledhwa)
+
+#### v0.1.4
+
+Manage the adaptation to landscape orientation. (@jujumoz)
+
+#### v0.1.3
+
+Add the allowCross property.
+
+#### v0.1.2
+
+Improve the performance for real device.
+
+#### v0.1.0
+
+Rewrite in pure javascript, for Android support.
 
 ## Notes
 

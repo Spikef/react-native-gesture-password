@@ -1,52 +1,35 @@
-var helper = require('./helper');
+import { isEquals, getTransform } from './helper'
+import React, { PropTypes, Component } from 'react'
+import { StyleSheet, View } from 'react-native'
 
-var React = require('react-native');
-var {
-    StyleSheet,
-    PropTypes,
-    View,
-    } = React;
+export default class Line extends Component {
+    constructor(props) {
+        super(props);
 
-var Line = React.createClass({
-    propTypes: {
-        color: PropTypes.string,
-        start: PropTypes.shape({
-            x: PropTypes.number,
-            y: PropTypes.number
-        }),
-        end: PropTypes.shape({
-            x: PropTypes.number,
-            y: PropTypes.number
-        })
-    },
-    getDefaultProps: function() {
-        return {
-            color: '#8E91A8',
-            start: {x: 0, y: 0},
-            end: {x: 0, y: 0}
-        }
-    },
-    setNativeProps: function(props) {
+        this.state = this.props;
+    }
+
+    setNativeProps(props) {
         this.setState(props);
-    },
-    componentWillReceiveProps: function(nextProps) {
+    }
+
+    componentWillReceiveProps(nextProps) {
         if ( nextProps.color !== this.props.color ) {
             this.setState({color: nextProps.color});
         }
-    },
-    getInitialState: function() {
-        return this.props;
-    },
-    render: function() {
-        var { start, end, color } = this.state;
+    }
 
-        if ( helper.isEquals(start, end) ) return null;
+    render() {
+        console.log(this.state)
+        let { start, end, color } = this.state;
 
-        var transform = helper.getTransform(start, end);
-        var length = transform.d;
-        var angle = transform.a + 'rad';
-        var moveX = transform.x;
-        var moveY = transform.y;
+        if ( isEquals(start, end) ) return null;
+
+        let transform = getTransform(start, end);
+        let length = transform.d;
+        let angle = transform.a + 'rad';
+        let moveX = transform.x;
+        let moveY = transform.y;
 
         return (
             <View ref='line' style={[
@@ -55,13 +38,31 @@ var Line = React.createClass({
             ]} />
         )
     }
-});
+}
 
-var styles = StyleSheet.create({
+Line.propTypes = {
+    color: PropTypes.string,
+    start: PropTypes.shape({
+        x: PropTypes.number,
+        y: PropTypes.number
+    }),
+    end: PropTypes.shape({
+        x: PropTypes.number,
+        y: PropTypes.number
+    })
+}
+
+Line.defaultProps = {
+    color: '#8E91A8',
+    start: {x: 0, y: 0},
+    end: {x: 0, y: 0}
+}
+
+const styles = StyleSheet.create({
     line: {
         position: 'absolute',
         height: 1
     }
-});
+})
 
-module.exports = Line;
+module.exports = Line    // for compatible with require only

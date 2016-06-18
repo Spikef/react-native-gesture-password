@@ -1,52 +1,32 @@
-var helper = require('./helper');
-
-var React = require('react-native');
-var {
+import * as helper from './helper'
+import React, { PropTypes, Component } from 'react'
+import {
     StyleSheet,
-    PropTypes,
     Dimensions,
     PanResponder,
     View,
     Text
-    } = React;
+} from 'react-native'
+import Line from './line'
+import Circle from './circle'
 
-var Line = require('./line');
-var Circle = require('./circle');
+const Width = Dimensions.get('window').width
+const Height = Dimensions.get('window').height
+const Top = (Height - Width)/2.0 * 1.5
+const Radius = Width / 10
 
-var Width = Dimensions.get('window').width;
-var Height = Dimensions.get('window').height;
-var Top = (Height - Width)/2.0 * 1.5;
-var Radius = Width / 10;
+export default class GesturePassword extends Component {
+    constructor(props) {
+        super(props);
 
-var GesturePassword = React.createClass({
-    timer: null,
-    lastIndex: -1,
-    sequence: '',   // 手势结果
-    isMoving: false,
-    propTypes: {
-        message: PropTypes.string,
-        rightColor: PropTypes.string,
-        wrongColor: PropTypes.string,
-        status: PropTypes.oneOf(['right', 'wrong', 'normal']),
-        onStart: PropTypes.func,
-        onEnd: PropTypes.func,
-        onReset: PropTypes.func,
-        interval: PropTypes.number,
-        allowCross: PropTypes.bool
-    },
-    getDefaultProps: function() {
-        return {
-            message: '',
-            rightColor: '#5FA8FC',
-            wrongColor: '#D93609',
-            status: 'normal',
-            interval: 0,
-            allowCross: false
-        }
-    },
-    getInitialState: function() {
-        var circles = [];
-        var Margin = Radius;
+        this.timer = null;
+        this.lastIndex = -1;
+        this.sequence = '';   // 手势结果
+        this.isMoving = false;
+
+        // getInitialState
+        let circles = [];
+        let Margin = Radius;
         for (let i=0; i < 9; i++) {
             let p = i % 3;
             let q = parseInt(i / 3);
@@ -57,12 +37,13 @@ var GesturePassword = React.createClass({
             });
         }
 
-        return {
+        this.state = {
             circles: circles,
             lines: []
         }
-    },
-    componentWillMount: function() {
+    }
+
+    componentWillMount() {
         this._panResponder = PanResponder.create({
             // 要求成为响应者：
             onStartShouldSetPanResponder: (event, gestureState) => true,
@@ -82,10 +63,11 @@ var GesturePassword = React.createClass({
             onPanResponderRelease: (event, gestureState) => {
                 this.onEnd(event, gestureState);
             }
-        });
-    },
-    render: function() {
-        var color = this.props.status === 'wrong' ? this.props.wrongColor : this.props.rightColor;
+        })
+    }
+
+    render() {
+        let color = this.props.status === 'wrong' ? this.props.wrongColor : this.props.rightColor;
 
         return (
             <View style={[styles.frame, this.props.style, {flex: 1}]}>
@@ -103,25 +85,29 @@ var GesturePassword = React.createClass({
                 {this.props.children}
             </View>
         )
-    },
-    renderCircles: function() {
-        var array = [], fill, color;
-        var{ status, wrongColor, rightColor } = this.props;
+    }
+
+    renderCircles() {
+        let array = [], fill, color, inner, outer;
+        let { status, wrongColor, rightColor, innerCircle, outerCircle } = this.props;
 
         this.state.circles.forEach(function(c, i) {
             fill = c.isActive;
             color = status === 'wrong' ? wrongColor : rightColor;
+            inner = !!innerCircle;
+            outer = !!outerCircle;
 
             array.push(
-                <Circle key={'c_' + i} fill={fill} color={color} x={c.x} y={c.y} r={Radius} />
+                <Circle key={'c_' + i} fill={fill} color={color} x={c.x} y={c.y} r={Radius} inner={inner} outer={outer} />
             )
         });
 
         return array;
-    },
-    renderLines: function() {
-        var array = [], color;
-        var{ status, wrongColor, rightColor } = this.props;
+    }
+
+    renderLines() {
+        let array = [], color;
+        let { status, wrongColor, rightColor } = this.props;
 
         this.state.lines.forEach(function(l, i) {
             color = status === 'wrong' ? wrongColor : rightColor;
@@ -132,26 +118,29 @@ var GesturePassword = React.createClass({
         });
 
         return array;
-    },
-    setActive: function(index) {
+    }
+
+    setActive(index) {
         this.state.circles[index].isActive = true;
 
-        var circles = this.state.circles;
+        let circles = this.state.circles;
         this.setState({circles});
-    },
-    resetActive: function() {
+    }
+
+    resetActive() {
         this.state.lines = [];
         for (let i=0; i < 9; i++) {
             this.state.circles[i].isActive = false;
         }
 
-        var circles = this.state.circles;
+        let circles = this.state.circles;
         this.setState({circles});
         this.props.onReset && this.props.onReset();
-    },
-    getTouchChar: function(touch) {
-        var x = touch.x;
-        var y = touch.y;
+    }
+
+    getTouchChar(touch) {
+        let x = touch.x;
+        let y = touch.y;
 
         for (let i=0; i < 9; i++) {
             if ( helper.isPointInCircle({x, y}, this.state.circles[i], Radius) ) {
@@ -160,13 +149,14 @@ var GesturePassword = React.createClass({
         }
 
         return false;
-    },
-    getCrossChar: function(char) {
-        var middles = '13457', last = String(this.lastIndex);
+    }
+
+    getCrossChar(char) {
+        let middles = '13457', last = String(this.lastIndex);
 
         if ( middles.indexOf(char) > -1 || middles.indexOf(last) > -1 ) return false;
 
-        var point = helper.getMiddlePoint(this.state.circles[last], this.state.circles[char]);
+        let point = helper.getMiddlePoint(this.state.circles[last], this.state.circles[char]);
 
         for (let i=0; i < middles.length; i++) {
             let index = middles[i];
@@ -176,12 +166,13 @@ var GesturePassword = React.createClass({
         }
 
         return false;
-    },
-    onStart: function(e, g) {
-        var x = e.nativeEvent.pageX;
-        var y = e.nativeEvent.pageY - Top;
+    }
 
-        var lastChar = this.getTouchChar({x, y});
+    onStart(e, g) {
+        let x = e.nativeEvent.pageX;
+        let y = e.nativeEvent.pageY - Top;
+
+        let lastChar = this.getTouchChar({x, y});
         if ( lastChar ) {
             this.isMoving = true;
             this.lastIndex = Number(lastChar);
@@ -189,7 +180,7 @@ var GesturePassword = React.createClass({
             this.resetActive();
             this.setActive(this.lastIndex);
 
-            var point = {
+            let point = {
                 x: this.state.circles[this.lastIndex].x,
                 y: this.state.circles[this.lastIndex].y
             };
@@ -202,15 +193,16 @@ var GesturePassword = React.createClass({
                 clearTimeout(this.timer);
             }
         }
-    },
-    onMove: function(e, g) {
-        var x = e.nativeEvent.pageX;
-        var y = e.nativeEvent.pageY - Top;
+    }
+
+    onMove(e, g) {
+        let x = e.nativeEvent.pageX;
+        let y = e.nativeEvent.pageY - Top;
 
         if ( this.isMoving ) {
             this.refs.line.setNativeProps({end: {x, y}});
 
-            var lastChar = null;
+            let lastChar = null;
 
             if ( !helper.isPointInCircle({x, y}, this.state.circles[this.lastIndex], Radius) ) {
                 lastChar = this.getTouchChar({x, y});
@@ -218,7 +210,7 @@ var GesturePassword = React.createClass({
 
             if ( lastChar && this.sequence.indexOf(lastChar) === -1 ) {
                 if ( !this.props.allowCross ) {
-                    var crossChar = this.getCrossChar(lastChar);
+                    let crossChar = this.getCrossChar(lastChar);
 
                     if ( crossChar && this.sequence.indexOf(crossChar) === -1 ) {
                         this.sequence += crossChar;
@@ -226,8 +218,8 @@ var GesturePassword = React.createClass({
                     }
                 }
 
-                var lastIndex = this.lastIndex;
-                var thisIndex = Number(lastChar);
+                let lastIndex = this.lastIndex;
+                let thisIndex = Number(lastChar);
 
                 this.state.lines.push({
                     start: {
@@ -245,7 +237,7 @@ var GesturePassword = React.createClass({
 
                 this.setActive(this.lastIndex);
 
-                var point = {
+                let point = {
                     x: this.state.circles[this.lastIndex].x,
                     y: this.state.circles[this.lastIndex].y
                 };
@@ -255,15 +247,16 @@ var GesturePassword = React.createClass({
         }
 
         if ( this.sequence.length === 9 ) this.onEnd();
-    },
-    onEnd: function(e, g) {
+    }
+
+    onEnd(e, g) {
         if ( this.isMoving ) {
-            var password = helper.getRealPassword(this.sequence);
+            let password = helper.getRealPassword(this.sequence);
             this.sequence = '';
             this.lastIndex = -1;
             this.isMoving = false;
 
-            var origin = {x: 0, y: 0};
+            let origin = {x: 0, y: 0};
             this.refs.line.setNativeProps({start: origin, end: origin});
 
             this.props.onEnd && this.props.onEnd(password);
@@ -273,9 +266,34 @@ var GesturePassword = React.createClass({
             }
         }
     }
-});
+}
 
-var styles = StyleSheet.create({
+GesturePassword.propTypes = {
+    message: PropTypes.string,
+    rightColor: PropTypes.string,
+    wrongColor: PropTypes.string,
+    status: PropTypes.oneOf(['right', 'wrong', 'normal']),
+    onStart: PropTypes.func,
+    onEnd: PropTypes.func,
+    onReset: PropTypes.func,
+    interval: PropTypes.number,
+    allowCross: PropTypes.bool,
+    innerCircle: PropTypes.bool,
+    outerCircle: PropTypes.bool
+}
+
+GesturePassword.defaultProps = {
+    message: '',
+    rightColor: '#5FA8FC',
+    wrongColor: '#D93609',
+    status: 'normal',
+    interval: 0,
+    allowCross: false,
+    innerCircle: true,
+    outerCircle: true
+}
+
+const styles = StyleSheet.create({
     frame: {
         backgroundColor: '#292B38'
     },
