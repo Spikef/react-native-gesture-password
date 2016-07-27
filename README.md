@@ -33,6 +33,10 @@ Styles for the gesture password view.
 ### textStyle (string)
 Style for the text element in the view.
 
+### circleColor (string)
+
+Use this color to render the default circle color.
+
 ### rightColor (string)
 
 Use this color to render when status !== 'wrong'.
