@@ -89,7 +89,7 @@ export default class GesturePassword extends Component {
 
     renderCircles() {
         let array = [], fill, color, inner, outer;
-        let { status, wrongColor, rightColor, innerCircle, outerCircle } = this.props;
+        let { status, normalColor, wrongColor, rightColor, innerCircle, outerCircle } = this.props;
 
         this.state.circles.forEach(function(c, i) {
             fill = c.isActive;
@@ -98,7 +98,7 @@ export default class GesturePassword extends Component {
             outer = !!outerCircle;
 
             array.push(
-                <Circle key={'c_' + i} fill={fill} color={color} x={c.x} y={c.y} r={Radius} inner={inner} outer={outer} />
+                <Circle key={'c_' + i} fill={fill} normalColor={normalColor} color={color} x={c.x} y={c.y} r={Radius} inner={inner} outer={outer} />
             )
         });
 
@@ -270,6 +270,7 @@ export default class GesturePassword extends Component {
 
 GesturePassword.propTypes = {
     message: PropTypes.string,
+    normalColor: PropTypes.string, 
     rightColor: PropTypes.string,
     wrongColor: PropTypes.string,
     status: PropTypes.oneOf(['right', 'wrong', 'normal']),
@@ -284,6 +285,7 @@ GesturePassword.propTypes = {
 
 GesturePassword.defaultProps = {
     message: '',
+    normalColor: '#5FA8FC',
     rightColor: '#5FA8FC',
     wrongColor: '#D93609',
     status: 'normal',
