@@ -7,11 +7,11 @@ export default class Circle extends Component {
     }
 
     render() {
-        let {color, fill, x, y, r, inner, outer} = this.props;
+        let {color, normalColor, fill, x, y, r, inner, outer} = this.props;
 
         return (
             <View style={[styles.outer,
-                        {left: x - r, top: y - r, width: 2 * r, height: 2 * r, borderRadius: r},
+                        {left: x - r, top: y - r, width: 2 * r, height: 2 * r, borderRadius: r}, {borderColor: normalColor},
                         fill && {borderColor: color},
                         !outer && {borderWidth: 0}]}>
 
