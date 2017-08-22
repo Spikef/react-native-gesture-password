@@ -13,7 +13,7 @@ import Circle from './circle'
 const Width = Dimensions.get('window').width;
 const Height = Dimensions.get('window').height;
 const isVertical = Height > Width;
-let Top = isVertical ? (Height - Width)/2.0 * 1.25 : 10;
+const Top = isVertical ? (Height - Width)/2.0 * 1.25 : 10;
 const Radius = isVertical ? Width / 10 : Width / 25;
 
 export default class GesturePassword extends Component {
