@@ -1,15 +1,15 @@
-# react-native-gesture-password
+# rn-gesture-password
 
 A gesture password component for React Native. It supports both iOS and Android since it's written in pure JavaScript.
 
 一个React Native的手势密码组件，纯JavaScript实现，因此同时支持iOS和安卓平台。
 
-![image](https://github.com/Spikef/react-native-gesture-password/raw/master/screenshot.gif)
+![image](https://github.com/luoxianli/react-native-gesture-password/raw/master/screenshot.gif)
 
 ## Install
 
 ```javascript
-npm install react-native-gesture-password --save
+npm install rn-gesture-password --save
 ```
 
 ## Properties
@@ -208,5 +208,3 @@ Rewrite in pure javascript, for Android support.
 ## Notes
 
 This old version(<0.1.0) is at the branch native. I won't update that unless fix bugs.
-
-If you have suggestions or bug reports, feel free to send pull request or [create new issue](https://github.com/spikef/react-native-gesture-password/issues/new).

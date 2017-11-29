@@ -1,31 +1,23 @@
 {
-  "name": "react-native-gesture-password",
+  "name": "rn-gesture-password",
   "version": "0.2.1",
-  "description": "A gesture password component for React Native. It supports both iOS and Android since it's' written in pure JavaScript.",
+  "description": "react-native 手势密码组件",
   "main": "source/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Spikef/react-native-gesture-password.git"
+    "url": "git+https://github.com/luoxianli/react-native-gesture-password.git"
   },
   "keywords": [
-    "react-component",
-    "react-native",
-    "ios",
-    "android",
-    "gesture password"
+    "gesture",
+    "password"
   ],
-  "author": {
-    "name": "Spikef",
-    "email": "Spikef@Foxmail.com"
-  },
-  "license": "MIT",
+  "author": "luoxianli",
+  "license": "ISC",
   "bugs": {
-    "url": "https://github.com/spikef/react-native-gesture-password/issues"
+    "url": "https://github.com/luoxianli/react-native-gesture-password/issues"
   },
-  "peerDependencies": {
-    "react-native": ">=0.14"
-  }
+  "homepage": "https://github.com/luoxianli/react-native-gesture-password#readme"
 }

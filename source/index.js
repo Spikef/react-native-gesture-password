@@ -1,5 +1,5 @@
 import * as helper from './helper'
-import React, { PropTypes, Component } from 'react'
+import React, { Component } from 'react'
 import {
     StyleSheet,
     Dimensions,
@@ -9,6 +9,7 @@ import {
 } from 'react-native'
 import Line from './line'
 import Circle from './circle'
+import PropTypes from 'prop-types'
 
 const Width = Dimensions.get('window').width;
 const Height = Dimensions.get('window').height;
