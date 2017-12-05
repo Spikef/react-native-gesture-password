@@ -1,5 +1,6 @@
-import React, { PropTypes, Component } from 'react'
+import React, { Component } from 'react'
 import { StyleSheet, View } from 'react-native'
+import PropTypes from 'prop-types';
 
 export default class Circle extends Component {
     constructor(props) {

@@ -1,5 +1,5 @@
 import * as helper from './helper'
-import React, { PropTypes, Component } from 'react'
+import React, { Component } from 'react'
 import {
     StyleSheet,
     Dimensions,
@@ -7,6 +7,7 @@ import {
     View,
     Text
 } from 'react-native'
+import PropTypes from 'prop-types';
 import Line from './line'
 import Circle from './circle'
 
