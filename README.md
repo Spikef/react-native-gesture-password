@@ -10,6 +10,7 @@ A gesture password component for React Native. It supports both iOS and Android 
 
 ```javascript
 npm install react-native-gesture-password --save
+npm install prop-types    --save
 ```
 
 ## Properties
