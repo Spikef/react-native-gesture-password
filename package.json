@@ -1,6 +1,6 @@
 {
   "name": "react-native-gesture-password",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "A gesture password component for React Native. It supports both iOS and Android since it's' written in pure JavaScript.",
   "main": "source/index.js",
   "scripts": {
@@ -27,5 +27,8 @@
   },
   "peerDependencies": {
     "react-native": ">=15.5"
+  },
+  "dependencies": {
+    "prop-types": "^15.6.0"
   }
 }
