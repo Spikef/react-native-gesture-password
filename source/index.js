@@ -4,17 +4,19 @@ import {
     StyleSheet,
     PanResponder,
     View,
-    Text
+    Text,
+    Dimensions
 } from 'react-native'
 import Line from './line'
 import Circle from './circle'
 import PropTypes from 'prop-types';
-let Dimensions=require("Dimensions");
+
 const Width = Dimensions.get('window').width;
 const Height = Dimensions.get('window').height;
 const isVertical = Height > Width;
 const Top = isVertical ? (Height - Width)/2.0 * 1.25 : 10;
 const Radius = isVertical ? Width / 10 : Width / 25;
+
 export default class GesturePassword extends Component {
     constructor(props) {
         super(props);
