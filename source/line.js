@@ -6,7 +6,7 @@ export default class Line extends Component {
     constructor(props) {
         super(props);
 
-        this.state = this.props;
+        this.state = { ...props };
     }
 
     setNativeProps(props) {
