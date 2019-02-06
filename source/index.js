@@ -5,7 +5,8 @@ import {
     PanResponder,
     View,
     Text,
-    Dimensions
+    Dimensions,
+    I18nManager
 } from 'react-native'
 import Line from './line'
 import Circle from './circle'
@@ -299,9 +300,11 @@ GesturePassword.defaultProps = {
 
 const styles = StyleSheet.create({
     frame: {
+        flexDirection: I18nManager.isRTL ? 'row' : 'row-reverse',
         backgroundColor: '#292B38'
     },
     board: {
+        flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
         position: 'absolute',
         left: isVertical ? 0 : Width/3.4,
         top: isVertical ? Top/1.5 : 30,
