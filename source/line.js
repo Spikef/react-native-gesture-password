@@ -21,7 +21,7 @@ export default class Line extends Component {
 
     render() {
         console.log(this.state)
-        let { start, end, color } = this.state;
+        let { start, end, color, transparentLine } = this.state;
 
         if ( isEquals(start, end) ) return null;
 
@@ -30,6 +30,9 @@ export default class Line extends Component {
         let angle = transform.a + 'rad';
         let moveX = transform.x;
         let moveY = transform.y;
+
+        //for transparent line
+        color = transparentLine ? '#00000000' : color;
 
         return (
             <View ref='line' style={[

@@ -46,6 +46,10 @@ Use this color to render when status !== 'wrong'.
 
 Use this color to render when status === 'wrong'.
 
+### transparentLine (boolean)
+
+True for transparent line.
+
 ### interval (number)
 
 The active circles will be reset automatically after you give an interval.
