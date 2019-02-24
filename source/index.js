@@ -110,7 +110,7 @@ export default class GesturePassword extends Component {
 
     renderLines() {
         let array = [], color;
-        let { status, wrongColor, rightColor } = this.props;
+        let { status, wrongColor, rightColor, transparentLine } = this.props;
 
         this.state.lines.forEach(function(l, i) {
             color = status === 'wrong' ? wrongColor : rightColor;
