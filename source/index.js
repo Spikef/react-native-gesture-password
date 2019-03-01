@@ -82,7 +82,7 @@ export default class GesturePassword extends Component {
                 <View style={styles.board} {...this._panResponder.panHandlers}>
                     {this.renderCircles()}
                     {this.renderLines()}
-                    <Line ref='line' color={color} />
+                    <Line ref='line' color={ this.props.transparentLine ? '#00000000' : color} />
                 </View>
 
                 {this.props.children}
@@ -110,10 +110,11 @@ export default class GesturePassword extends Component {
 
     renderLines() {
         let array = [], color;
-        let { status, wrongColor, rightColor } = this.props;
+        let { status, wrongColor, rightColor, transparentLine } = this.props;
 
         this.state.lines.forEach(function(l, i) {
             color = status === 'wrong' ? wrongColor : rightColor;
+            color = transparentLine ? '#00000000' : color;
 
             array.push(
                 <Line key={'l_' + i} color={color} start={l.start} end={l.end} />
