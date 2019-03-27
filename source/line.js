@@ -20,7 +20,6 @@ export default class Line extends Component {
     }
 
     render() {
-        console.log(this.state)
         let { start, end, color, transparentLine } = this.state;
 
         if ( isEquals(start, end) ) return null;
