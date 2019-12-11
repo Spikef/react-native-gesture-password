@@ -1,6 +1,6 @@
 # react-native-gesture-password
 
-A gesture password component for React Native. It supports both iOS and Android since it's written in pure JavaScript.
+A gesture password component for React Native (web). It supports both iOS, Android and Web since it's written in pure JavaScript.
 
 一个React Native的手势密码组件，纯JavaScript实现，因此同时支持iOS和安卓平台。
 
