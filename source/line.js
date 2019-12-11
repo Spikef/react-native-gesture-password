@@ -13,10 +13,13 @@ export default class Line extends PureComponent {
     this.setState(props);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.color !== this.props.color) {
-      this.setState({ color: nextProps.color });
+  static getDerivedStateFromProps(props, state) {
+    if (props.color !== state.color) {
+      return {
+        color: props.color,
+      };
     }
+    return null;
   }
 
   render() {
