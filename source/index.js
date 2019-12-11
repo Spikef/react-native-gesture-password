@@ -1,5 +1,5 @@
 import * as helper from "./helper";
-import React, { Component } from "react";
+import React, { Component, memo, useMemo } from "react";
 import {
   StyleSheet,
   PanResponder,
@@ -45,29 +45,21 @@ export default class GesturePassword extends Component {
       lines: [],
     };
   }
+  _panResponder = PanResponder.create({
+    // 要求成为响应者：
 
-  componentWillMount() {
-    this._panResponder = PanResponder.create({
-      // 要求成为响应者：
-      onStartShouldSetPanResponder: (event, gestureState) => true,
-      onStartShouldSetPanResponderCapture: (event, gestureState) => true,
-      onMoveShouldSetPanResponder: (event, gestureState) => true,
-      onMoveShouldSetPanResponderCapture: (event, gestureState) => true,
+    onStartShouldSetPanResponder: (event, gestureState) => true,
+    onStartShouldSetPanResponderCapture: (event, gestureState) => true,
+    onMoveShouldSetPanResponder: (event, gestureState) => true,
+    onMoveShouldSetPanResponderCapture: (event, gestureState) => true,
 
-      // 开始手势操作
-      onPanResponderGrant: (event, gestureState) => {
-        this.onStart(event, gestureState);
-      },
-      // 移动操作
-      onPanResponderMove: (event, gestureState) => {
-        this.onMove(event, gestureState);
-      },
-      // 释放手势
-      onPanResponderRelease: (event, gestureState) => {
-        this.onEnd(event, gestureState);
-      },
-    });
-  }
+    // 开始手势操作
+    onPanResponderGrant: (e, g) => this.onStart(e, g),
+    // 移动操作
+    onPanResponderMove: (e, g) => this.onMove(e, g),
+    // 释放手势
+    onPanResponderRelease: (e, g) => this.onEnd(e, g),
+  });
 
   render() {
     let color =
@@ -75,89 +67,56 @@ export default class GesturePassword extends Component {
         ? this.props.wrongColor
         : this.props.rightColor;
 
-    return (
-      <View style={[styles.frame, this.props.style, { flex: 1 }]}>
-        <View style={styles.message}>
-          <Text
-            style={[styles.msgText, this.props.textStyle, { color: color }]}
-          >
-            {this.state.message || this.props.message}
-          </Text>
-        </View>
-        <View style={styles.board} {...this._panResponder.panHandlers}>
-          {this.renderCircles()}
-          {this.renderLines()}
-          <Line
-            ref="line"
-            color={this.props.transparentLine ? "#00000000" : color}
-          />
-        </View>
-
-        {this.props.children}
-      </View>
-    );
-  }
-
-  renderCircles() {
-    let array = [],
-      fill,
-      color,
-      inner,
-      outer;
-    let {
+    const {
+      textStyle,
+      style,
       status,
+      message,
       normalColor,
       wrongColor,
       rightColor,
       innerCircle,
       outerCircle,
+      transparentLine,
+      children,
     } = this.props;
 
-    this.state.circles.forEach(function(c, i) {
-      fill = c.isActive;
-      color = status === "wrong" ? wrongColor : rightColor;
-      inner = !!innerCircle;
-      outer = !!outerCircle;
-
-      array.push(
-        <Circle
-          key={"c_" + i}
-          fill={fill}
+    return (
+      <Container
+        textStyle={textStyle}
+        style={style}
+        status={status}
+        message={this.state.message || message}
+        wrongColor={wrongColor}
+        rightColor={rightColor}
+        panHandlers={this._panResponder.panHandlers}
+        userAddedChildren={children}
+      >
+        <Circles
+          circles={this.state.circles}
+          status={status}
           normalColor={normalColor}
-          color={color}
-          x={c.x}
-          y={c.y}
-          r={Radius}
-          inner={inner}
-          outer={outer}
-        />,
-      );
-    });
-
-    return array;
-  }
-
-  renderLines() {
-    let array = [],
-      color;
-    let { status, wrongColor, rightColor, transparentLine } = this.props;
-
-    this.state.lines.forEach(function(l, i) {
-      color = status === "wrong" ? wrongColor : rightColor;
-      color = transparentLine ? "#00000000" : color;
-
-      array.push(
-        <Line key={"l_" + i} color={color} start={l.start} end={l.end} />,
-      );
-    });
-
-    return array;
+          wrongColor={wrongColor}
+          rightColor={rightColor}
+          innerCircle={innerCircle}
+          outerCircle={outerCircle}
+        />
+        <Lines
+          lines={this.state.lines}
+          status={status}
+          wrongColor={wrongColor}
+          rightColor={rightColor}
+          transparentLine={transparentLine}
+        />
+        <Line ref="line" color={transparentLine ? "#00000000" : color} />
+      </Container>
+    );
   }
 
   setActive(index) {
     this.state.circles[index].isActive = true;
 
-    let circles = this.state.circles;
+    let circles = [...this.state.circles];
     this.setState({ circles });
   }
 
@@ -167,7 +126,7 @@ export default class GesturePassword extends Component {
       this.state.circles[i].isActive = false;
     }
 
-    let circles = this.state.circles;
+    let circles = [...this.state.circles];
     this.setState({ circles });
     this.props.onReset && this.props.onReset();
   }
@@ -206,7 +165,11 @@ export default class GesturePassword extends Component {
     return false;
   }
 
-  onStart(e, g) {
+  onStart = (e, g) => {
+    this.sequence = "";
+    this.lastIndex = -1;
+    this.isMoving = false;
+
     let x = isVertical
       ? e.nativeEvent.pageX
       : e.nativeEvent.pageX - Width / 3.4;
@@ -215,6 +178,7 @@ export default class GesturePassword extends Component {
       : e.nativeEvent.pageY - 30;
 
     let lastChar = this.getTouchChar({ x, y });
+
     if (lastChar) {
       this.isMoving = true;
       this.lastIndex = Number(lastChar);
@@ -235,17 +199,17 @@ export default class GesturePassword extends Component {
         clearTimeout(this.timer);
       }
     }
-  }
+  };
 
-  onMove(e, g) {
-    let x = isVertical
-      ? e.nativeEvent.pageX
-      : e.nativeEvent.pageX - Width / 3.4;
-    let y = isVertical
-      ? e.nativeEvent.pageY - Top / 1.25
-      : e.nativeEvent.pageY - 30;
-
+  onMove = (e, g) => {
     if (this.isMoving) {
+      let x = isVertical
+        ? e.nativeEvent.pageX
+        : e.nativeEvent.pageX - Width / 3.4;
+      let y = isVertical
+        ? e.nativeEvent.pageY - Top / 1.25
+        : e.nativeEvent.pageY - 30;
+
       this.refs.line.setNativeProps({ end: { x, y } });
 
       let lastChar = null;
@@ -273,18 +237,21 @@ export default class GesturePassword extends Component {
         let lastIndex = this.lastIndex;
         let thisIndex = Number(lastChar);
 
-        this.state.lines.push({
-          start: {
-            x: this.state.circles[lastIndex].x,
-            y: this.state.circles[lastIndex].y,
+        this.state.lines = [
+          ...this.state.lines,
+          {
+            start: {
+              x: this.state.circles[lastIndex].x,
+              y: this.state.circles[lastIndex].y,
+            },
+            end: {
+              x: this.state.circles[thisIndex].x,
+              y: this.state.circles[thisIndex].y,
+            },
           },
-          end: {
-            x: this.state.circles[thisIndex].x,
-            y: this.state.circles[thisIndex].y,
-          },
-        });
+        ];
 
-        this.lastIndex = Number(lastChar);
+        this.lastIndex = thisIndex;
         this.sequence += lastChar;
 
         this.setActive(this.lastIndex);
@@ -299,25 +266,24 @@ export default class GesturePassword extends Component {
     }
 
     if (this.sequence.length === 9) this.onEnd();
-  }
+  };
 
-  onEnd(e, g) {
-    if (this.isMoving) {
-      let password = helper.getRealPassword(this.sequence);
-      this.sequence = "";
-      this.lastIndex = -1;
-      this.isMoving = false;
+  onEnd = (e, g) => {
+    const password = helper.getRealPassword(this.sequence);
 
-      let origin = { x: 0, y: 0 };
-      this.refs.line.setNativeProps({ start: origin, end: origin });
+    this.sequence = "";
+    this.lastIndex = -1;
+    this.isMoving = false;
 
-      this.props.onEnd && this.props.onEnd(password);
+    let origin = { x: 0, y: 0 };
+    this.refs.line.setNativeProps({ start: origin, end: origin });
 
-      if (this.props.interval > 0) {
-        this.timer = setTimeout(() => this.resetActive(), this.props.interval);
-      }
+    this.props.onEnd && this.props.onEnd(password);
+
+    if (this.props.interval > 0) {
+      this.timer = setTimeout(() => this.resetActive(), this.props.interval);
     }
-  }
+  };
 }
 
 GesturePassword.propTypes = {
@@ -347,8 +313,92 @@ GesturePassword.defaultProps = {
   outerCircle: true,
 };
 
+const Container = memo(
+  ({
+    textStyle,
+    style,
+    status,
+    message,
+    wrongColor,
+    rightColor,
+    panHandlers,
+    children,
+    userAddedChildren,
+  }) => {
+    let color = status === "wrong" ? wrongColor : rightColor;
+
+    const _styleContainer = useMemo(() => [styles.frame, style], [style]);
+
+    const _styleText = useMemo(
+      () => [styles.msgText, textStyle, { color: color }],
+      [textStyle, color],
+    );
+
+    return (
+      <View style={_styleContainer}>
+        <View style={styles.message}>
+          <Text style={_styleText}>{message}</Text>
+        </View>
+        <View style={styles.board} {...panHandlers}>
+          {children}
+        </View>
+        {userAddedChildren}
+      </View>
+    );
+  },
+);
+
+const Lines = memo(
+  ({ lines, status, wrongColor, rightColor, transparentLine }) => {
+    let color;
+
+    return lines.map(function(l, i) {
+      color = status === "wrong" ? wrongColor : rightColor;
+      color = transparentLine ? "#00000000" : color;
+
+      return <Line key={"l_" + i} color={color} start={l.start} end={l.end} />;
+    });
+  },
+);
+
+const Circles = memo(
+  ({
+    circles,
+    status,
+    normalColor,
+    wrongColor,
+    rightColor,
+    innerCircle,
+    outerCircle,
+  }) => {
+    let fill, color, inner, outer;
+
+    return circles.map(function(c, i) {
+      fill = c.isActive;
+      color = status === "wrong" ? wrongColor : rightColor;
+      inner = !!innerCircle;
+      outer = !!outerCircle;
+
+      return (
+        <Circle
+          key={"c_" + i}
+          fill={fill}
+          normalColor={normalColor}
+          color={color}
+          x={c.x}
+          y={c.y}
+          r={Radius}
+          inner={inner}
+          outer={outer}
+        />
+      );
+    });
+  },
+);
+
 const styles = StyleSheet.create({
   frame: {
+    flex: 1,
     flexDirection: I18nManager.isRTL ? "row" : "row-reverse",
     backgroundColor: "#292B38",
   },

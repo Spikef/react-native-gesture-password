@@ -1,43 +1,38 @@
-import React, { Component } from "react";
+import React, { memo, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
-export default class Circle extends Component {
-  constructor(props) {
-    super(props);
-  }
 
-  render() {
-    let { color, normalColor, fill, x, y, r, inner, outer } = this.props;
+const Circle = memo(({ color, normalColor, fill, x, y, r, inner, outer }) => {
+  const _styleContainer = useMemo(
+    () => [
+      styles.outer,
+      {
+        left: x - r,
+        top: y - r,
+        width: 2 * r,
+        height: 2 * r,
+        borderRadius: r,
+      },
+      { borderColor: normalColor },
+      fill && { borderColor: color },
+      !outer && { borderWidth: 0 },
+    ],
+    [x, r, y, normalColor, color, fill, outer],
+  );
 
-    return (
-      <View
-        style={[
-          styles.outer,
-          {
-            left: x - r,
-            top: y - r,
-            width: 2 * r,
-            height: 2 * r,
-            borderRadius: r,
-          },
-          { borderColor: normalColor },
-          fill && { borderColor: color },
-          !outer && { borderWidth: 0 },
-        ]}
-      >
-        {inner && (
-          <View
-            style={[
-              !outer && styles.inner,
-              { width: (2 * r) / 3, height: (2 * r) / 3, borderRadius: r / 3 },
-              fill && { backgroundColor: color },
-            ]}
-          />
-        )}
-      </View>
-    );
-  }
-}
+  const _styleIner = useMemo(
+    () => [
+      !outer && styles.inner,
+      { width: (2 * r) / 3, height: (2 * r) / 3, borderRadius: r / 3 },
+      fill && { backgroundColor: color },
+    ],
+    [r, outer, fill, color],
+  );
+
+  return (
+    <View style={_styleContainer}>{inner && <View style={_styleIner} />}</View>
+  );
+});
 
 Circle.propTypes = {
   color: PropTypes.string,
@@ -66,5 +61,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#8E91A8",
   },
 });
+
+export default Circle;
 
 module.exports = Circle; // for compatible with require only
