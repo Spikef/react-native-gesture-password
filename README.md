@@ -2,13 +2,13 @@
 
 A gesture password component for React Native (web). It supports both iOS, Android and Web since it's written in pure JavaScript.
 
-一个React Native的手势密码组件，纯JavaScript实现，因此同时支持iOS和安卓平台。
+一个React Native的手势密码组件，纯JavaScript实现，因此同时支持iOS、安卓和Web平台。
 
 ![image](https://github.com/Spikef/react-native-gesture-password/raw/master/screenshot.gif)
 
 ## Install
 
-```javascript
+```bash
 npm install react-native-gesture-password --save
 npm install prop-types    --save
 ```
@@ -80,7 +80,7 @@ Control whether to draw outer and inner circle, true default.
 
 ## Examples
 
-```javascript
+```jsx harmony
 
 var React = require('react');
 var {
@@ -183,6 +183,15 @@ AppRegistry.registerComponent('AppDemo', () => AppDemo);
 
 ```
 ## Change Logs
+
+#### 0.4.0
+
+- Prettier: best practices for Format documents
+- Performance: Increase performance by using React hooks
+- Declaration
+- Readme: this package work with react-native-web well
+
+(@hosseinmd)
 
 #### v0.2.0
 
