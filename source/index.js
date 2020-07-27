@@ -174,7 +174,7 @@ export default class GesturePassword extends Component {
       ? e.nativeEvent.pageX
       : e.nativeEvent.pageX - Width / 3.4;
     let y = isVertical
-      ? e.nativeEvent.pageY - Top / 1.25
+      ? e.nativeEvent.pageY - Top / 1.5
       : e.nativeEvent.pageY - 30;
 
     let lastChar = this.getTouchChar({ x, y });
@@ -207,7 +207,7 @@ export default class GesturePassword extends Component {
         ? e.nativeEvent.pageX
         : e.nativeEvent.pageX - Width / 3.4;
       let y = isVertical
-        ? e.nativeEvent.pageY - Top / 1.25
+        ? e.nativeEvent.pageY - Top / 1.5
         : e.nativeEvent.pageY - 30;
 
       this.refs.line.setNativeProps({ end: { x, y } });
@@ -352,7 +352,7 @@ const Lines = memo(
   ({ lines, status, wrongColor, rightColor, transparentLine }) => {
     let color;
 
-    return lines.map(function(l, i) {
+    return lines.map(function (l, i) {
       color = status === "wrong" ? wrongColor : rightColor;
       color = transparentLine ? "#00000000" : color;
 
@@ -373,7 +373,7 @@ const Circles = memo(
   }) => {
     let fill, color, inner, outer;
 
-    return circles.map(function(c, i) {
+    return circles.map(function (c, i) {
       fill = c.isActive;
       color = status === "wrong" ? wrongColor : rightColor;
       inner = !!innerCircle;
